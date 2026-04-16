@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="icon.png" alt="FinTurb" width="128" />
+</p>
+
 # FinTurb Analytics MCP Server
 
 > Institutional-grade risk analytics for AI assistants.

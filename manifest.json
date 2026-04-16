@@ -2,6 +2,19 @@
   "$schema": "https://modelcontextprotocol.io/schema/manifest.json",
   "name": "finturb-analytics",
   "display_name": "FinTurb Analytics",
+  "icon": "https://raw.githubusercontent.com/ai-intellicore/finturb-mcp/main/icon.png",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/ai-intellicore/finturb-mcp/main/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/ai-intellicore/finturb-mcp/main/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ],
   "version": "1.0.0",
   "description": "Institutional-grade financial risk analytics: composite risk regimes, systemic fragility alerts, media sentiment, global liquidity, and statistical arbitrage scanning across 550+ securities.",
   "tagline": "Institutional-grade risk analytics for AI assistants",
@@ -16,7 +29,11 @@
     "url": "https://github.com/ai-intellicore/finturb-mcp"
   },
   "license": "Proprietary",
-  "categories": ["finance", "analytics", "data"],
+  "categories": [
+    "finance",
+    "analytics",
+    "data"
+  ],
   "tags": [
     "financial-analytics",
     "risk-management",
