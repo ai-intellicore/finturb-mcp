@@ -1,0 +1,69 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema/manifest.json",
+  "name": "finturb-analytics",
+  "display_name": "FinTurb Analytics",
+  "version": "1.0.0",
+  "description": "Institutional-grade financial risk analytics: composite risk regimes, systemic fragility alerts, media sentiment, global liquidity, and statistical arbitrage scanning across 550+ securities.",
+  "tagline": "Institutional-grade risk analytics for AI assistants",
+  "author": {
+    "name": "AI IntelliCore Limited",
+    "url": "https://www.finturb.com",
+    "email": "tk@intellicore.ai"
+  },
+  "homepage": "https://www.finturb.com/mcp-access",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ai-intellicore/finturb-mcp"
+  },
+  "license": "Proprietary",
+  "categories": ["finance", "analytics", "data"],
+  "tags": [
+    "financial-analytics",
+    "risk-management",
+    "market-intelligence",
+    "quantitative-finance",
+    "sentiment-analysis",
+    "statistical-arbitrage"
+  ],
+  "server": {
+    "type": "remote",
+    "url": "https://mcp-mkic.pythonanywhere.com/mcp",
+    "transport": "streamable-http",
+    "authentication": {
+      "type": "none",
+      "rate_limit": {
+        "anonymous": {
+          "calls": 50,
+          "window_hours": 48,
+          "burst_calls": 30,
+          "burst_window_minutes": 5
+        }
+      },
+      "premium_url": "https://www.finturb.com/subscribe"
+    }
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": false,
+    "read_only": true
+  },
+  "tool_count": 26,
+  "resource_count": 3,
+  "output_contract": {
+    "summary": "Every tool response contains a one-line human-readable headline.",
+    "generation_mode": "Every response is tagged 'deterministic' or 'synthesized' for provenance.",
+    "file_modified": "Every response carries an ISO timestamp of the underlying data file.",
+    "structured_content": "FastMCP publishes the returned dict as structuredContent in the MCP envelope."
+  },
+  "documentation": {
+    "setup": "https://github.com/ai-intellicore/finturb-mcp/tree/main/docs",
+    "tools": "https://github.com/ai-intellicore/finturb-mcp/blob/main/tools.json",
+    "examples": "https://github.com/ai-intellicore/finturb-mcp/tree/main/examples"
+  },
+  "support": {
+    "email": "tk@intellicore.ai",
+    "issues": "https://github.com/ai-intellicore/finturb-mcp/issues",
+    "website": "https://www.finturb.com"
+  }
+}

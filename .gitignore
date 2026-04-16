@@ -1,0 +1,14 @@
+# Local artifacts — nothing proprietary should ever be committed
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+node_modules/
+.venv/
+venv/
+*.swp

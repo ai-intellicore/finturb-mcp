@@ -1,0 +1,33 @@
+FinTurb Analytics MCP Server — Proprietary License
+
+Copyright (c) 2026 AI IntelliCore Limited. All rights reserved.
+
+This repository contains documentation, manifests, and metadata for the FinTurb
+Analytics MCP server operated by AI IntelliCore Limited. The server itself, its
+underlying signal computation methodologies, data pipelines, and proprietary
+algorithms remain the exclusive property of AI IntelliCore Limited.
+
+PERMITTED USES
+
+- Viewing, downloading, and referencing this documentation for the purpose of
+  connecting AI assistants to the FinTurb Analytics MCP server.
+- Linking to or citing this repository in technical documentation.
+- Contributing bug reports or documentation improvements via GitHub Issues.
+
+PROHIBITED USES
+
+- Reverse-engineering or attempting to replicate the FinTurb signals,
+  methodologies, or server implementation.
+- Redistributing or republishing the content of this repository without
+  attribution.
+- Using this documentation to build competing analytics products.
+- Training machine learning models on the contents of this repository.
+
+The FinTurb analytics data returned by the MCP server is subject to separate
+terms of service available at https://www.finturb.com/terms.
+
+For licensing inquiries, institutional partnerships, or white-label arrangements,
+contact: tk@intellicore.ai
+
+AI IntelliCore Limited is a Cyprus-registered entity. This license is governed
+by the laws of the Republic of Cyprus.

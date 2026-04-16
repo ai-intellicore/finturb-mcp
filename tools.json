@@ -1,0 +1,319 @@
+{
+  "server": "finturb-analytics",
+  "version": "1.0.0",
+  "total_tools": 26,
+  "endpoint": "https://mcp-mkic.pythonanywhere.com/mcp",
+  "categories": {
+    "composite_risk": "3-way and 4-way composite risk score, regime history, conditional returns, and multi-signal interaction tables.",
+    "turbulence": "Cross-asset covariance turbulence, regime transition probabilities, and historical signal dates.",
+    "fragility": "Three-tier Absorption Ratio alerts plus per-asset PC1/PC2 eigenvector loadings history.",
+    "sentiment": "GDELT-derived per-asset tone, volume, heatmap, outlier alerts, and geopolitical tension indicators.",
+    "liquidity": "Global Liquidity Index composite, monthly history, and regional breakdown.",
+    "stat_arb": "Mean-reversion opportunity scanner across 550+ securities with full 16-field metrics.",
+    "ai_intelligence": "Cross-pillar market briefing, GPT-4o narrative commentary, and dashboard-grade Signal Strategist snapshot.",
+    "supporting": "Annual asset-class returns and RAG-scored stablecoin scorecard."
+  },
+  "tools": [
+    {
+      "name": "get_risk_score",
+      "display_name": "Composite Risk Score",
+      "category": "composite_risk",
+      "description": "Current composite risk score (0–100) with regime classification, duration, AR/turbulence/GDELT decomposition, fragile-shock status, count of elevated signals, and the 4-way liquidity-gated extension with GLI/PLI/PSI/XFI readings.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "What's the current market risk regime?"
+    },
+    {
+      "name": "get_risk_history",
+      "display_name": "Risk Score History",
+      "category": "composite_risk",
+      "description": "Daily composite risk score, regime label, and regime duration for the last N days.",
+      "read_only": true,
+      "parameters": [
+        {"name": "days", "type": "integer", "default": 90, "description": "Trailing days of history."}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "How has the risk regime evolved over the last 60 days?"
+    },
+    {
+      "name": "get_conditional_returns",
+      "display_name": "Conditional Returns by Regime",
+      "category": "composite_risk",
+      "description": "Historical return statistics by regime per core asset — mean return, P(negative), and CVaR.",
+      "read_only": true,
+      "parameters": [
+        {"name": "horizon", "type": "string", "enum": ["5d", "21d"], "default": "5d", "description": "Forward horizon."}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "What tends to happen to SPY in a stress regime over the next 21 days?"
+    },
+    {
+      "name": "get_interaction_table",
+      "display_name": "Multi-Signal Interaction Table",
+      "category": "composite_risk",
+      "description": "2×2×2 conditional returns table across the three primary signal dimensions, for a given asset.",
+      "read_only": true,
+      "parameters": [
+        {"name": "asset", "type": "string", "default": "SPY", "description": "SPY, BTC_USD, GLD, HYG, or 'all'."}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "Show me the interaction between the three signal dimensions for SPY returns."
+    },
+    {
+      "name": "get_turbulence_score",
+      "display_name": "Financial Turbulence Score",
+      "category": "turbulence",
+      "description": "Daily and 10-day rolling turbulence percentiles with quartile classifications and regime labels.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "How unusual are today's cross-asset moves?"
+    },
+    {
+      "name": "get_transition_probabilities",
+      "display_name": "Regime Transition Probabilities",
+      "category": "turbulence",
+      "description": "Markov Q1–Q3 transition matrices for daily and 10-day rolling turbulence states — P(remain) and P(move) by state and duration bucket.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "How long do these turbulence regimes typically last?"
+    },
+    {
+      "name": "get_signal_dates",
+      "display_name": "Historical Signal Dates",
+      "category": "turbulence",
+      "description": "Historical bearish (Type A) and bullish (Type B) signal dates with percentile, strength, subsequent asset returns, and outcome.",
+      "read_only": true,
+      "parameters": [
+        {"name": "signal_type", "type": "string", "enum": ["A", "B", "both"], "default": "both"}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "Show historical analogues for the current turbulence signal."
+    },
+    {
+      "name": "get_absorption_ratio",
+      "display_name": "Three-Tier Fragility Alerts",
+      "category": "fragility",
+      "description": "Three-tier Absorption Ratio alert system (30-day Watch, 60-day Warning, 90-day Crisis) with classification, active-tier count, and overall alert level.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "Is systemic fragility triggering any alerts today?"
+    },
+    {
+      "name": "get_fragility_loadings",
+      "display_name": "Fragility Time Series",
+      "category": "fragility",
+      "description": "30-day Absorption Ratio history tail — aggregate time series only.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "What's the recent fragility trajectory?"
+    },
+    {
+      "name": "get_pc_loadings_history",
+      "display_name": "Per-Asset PC Loadings History",
+      "category": "fragility",
+      "description": "Per-asset PC1/PC2 eigenvector loadings across 30/60/90-day rolling windows, with variance_explained per date. Reveals exactly which assets are driving systemic coupling.",
+      "read_only": true,
+      "parameters": [
+        {"name": "window", "type": "integer", "enum": [30, 60, 90], "default": 30},
+        {"name": "days", "type": "integer", "default": 60, "min": 1, "max": 90}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "Which assets are driving PC1 loadings right now, and how has that shifted over the last 60 days?"
+    },
+    {
+      "name": "get_media_sentiment",
+      "display_name": "Per-Asset Media Sentiment",
+      "category": "sentiment",
+      "description": "GDELT-derived tone, volume, z-scores, composite signal, and alert flags for specified assets (27+ tracked).",
+      "read_only": true,
+      "parameters": [
+        {"name": "tickers", "type": "string", "description": "Comma-separated tickers, or omit for all.", "required": false}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "What's media sentiment saying about gold and Bitcoin?"
+    },
+    {
+      "name": "get_sentiment_heatmap",
+      "display_name": "Sentiment Heatmap",
+      "category": "sentiment",
+      "description": "All assets sorted by composite-signal magnitude — full sentiment heatmap in structured form.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "Show me the full sentiment ranking across every asset."
+    },
+    {
+      "name": "get_sentiment_alerts",
+      "display_name": "Sentiment Outlier Alerts",
+      "category": "sentiment",
+      "description": "Only assets with |tone z| > 2 or |volume z| > 2 — the actionable outliers.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "Which assets have sentiment outliers today?"
+    },
+    {
+      "name": "get_geopolitical_tone",
+      "display_name": "Geopolitical Tension",
+      "category": "sentiment",
+      "description": "Global Goldstein Scale average and conflict ratio as a macro geopolitical tension indicator.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "What's the current global geopolitical tension level?"
+    },
+    {
+      "name": "get_global_liquidity",
+      "display_name": "Global Liquidity Index",
+      "category": "liquidity",
+      "description": "GLI (0–100) with PLI / PSI / XFI sub-indices, cycle phase, XFI-nowcast flag, and regional breakdown.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "How tight are global liquidity conditions?"
+    },
+    {
+      "name": "get_liquidity_history",
+      "display_name": "Liquidity History",
+      "category": "liquidity",
+      "description": "Monthly GLI + sub-indices time series with cycle phase per observation.",
+      "read_only": true,
+      "parameters": [
+        {"name": "months", "type": "integer", "default": 12, "min": 1, "max": 240}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "How have liquidity conditions trended over the last two years?"
+    },
+    {
+      "name": "get_regional_liquidity",
+      "display_name": "Regional Liquidity",
+      "category": "liquidity",
+      "description": "Per-region liquidity readings (US, Eurozone, China, Japan, UK) with comparative rankings.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "How are US liquidity conditions compared to Europe, China, and Japan?"
+    },
+    {
+      "name": "get_oversold_opportunities",
+      "display_name": "Oversold Opportunity Scanner",
+      "category": "stat_arb",
+      "description": "Oversold securities ranked by opportunity score — no minimum threshold; every flagged candidate is returned, ranked.",
+      "read_only": true,
+      "parameters": [
+        {"name": "top_n", "type": "integer", "default": 20}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "What's cheap right now and likely to bounce back?"
+    },
+    {
+      "name": "get_overbought_opportunities",
+      "display_name": "Overbought Opportunity Scanner",
+      "category": "stat_arb",
+      "description": "Overbought securities ranked by opportunity score.",
+      "read_only": true,
+      "parameters": [
+        {"name": "top_n", "type": "integer", "default": 20}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "Which names look stretched to the upside and due for a pullback?"
+    },
+    {
+      "name": "get_ticker_metrics",
+      "display_name": "Per-Ticker Metrics",
+      "category": "stat_arb",
+      "description": "Full 16-field quantitative profile for any of 550+ tickers — z-score, RSI, Bollinger %B, MACD, mean reversion score, ADF, Hurst, half-life, CVaR, and volatility.",
+      "read_only": true,
+      "parameters": [
+        {"name": "ticker", "type": "string", "required": true}
+      ],
+      "generation_mode": "deterministic",
+      "example_prompt": "Give me the full quantitative profile for NVDA."
+    },
+    {
+      "name": "get_stat_arb_summary",
+      "display_name": "Stat-Arb Universe Summary",
+      "category": "stat_arb",
+      "description": "Overview: oversold and overbought counts across the universe plus the top 5 opportunities each direction.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "What's at extremes today across the stat-arb universe?"
+    },
+    {
+      "name": "get_market_briefing",
+      "display_name": "Cross-Pillar Market Briefing",
+      "category": "ai_intelligence",
+      "description": "One-call synthesis across every pillar — regime, fragility alerts, turbulence, sentiment outliers, liquidity phase, and top stat-arb candidates.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "synthesized",
+      "example_prompt": "Give me a full market briefing."
+    },
+    {
+      "name": "get_gpt_commentary",
+      "display_name": "GPT Market Commentary",
+      "category": "ai_intelligence",
+      "description": "GPT-4o-generated narrative commentary on transition probabilities and daily asset moves.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "synthesized",
+      "example_prompt": "What's the narrative read on today's market?"
+    },
+    {
+      "name": "get_signal_strategist",
+      "display_name": "Signal Strategist Snapshot",
+      "category": "ai_intelligence",
+      "description": "Dashboard-grade snapshot: regime gauge, decomposition, 4-way liquidity-gated score, GLI/PLI/PSI/XFI readings, and conditional returns.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "synthesized",
+      "example_prompt": "Give me the Signal Strategist dashboard read."
+    },
+    {
+      "name": "get_periodic_returns",
+      "display_name": "Annual Asset-Class Returns",
+      "category": "supporting",
+      "description": "Annual returns for 20 asset classes (2018–present including YTD) with risk metrics — Sharpe, Sortino, Omega, max drawdown.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "How have asset classes performed this year versus their long-term track record?"
+    },
+    {
+      "name": "get_stablecoin_scorecard",
+      "display_name": "Stablecoin RAG Scorecard",
+      "category": "supporting",
+      "description": "Red / Amber / Green assessment across 10 dimensions per major stablecoin — reserve model, regulatory status, transparency, custody, attestation, and more.",
+      "read_only": true,
+      "parameters": [],
+      "generation_mode": "deterministic",
+      "example_prompt": "Compare stablecoin risk profiles."
+    }
+  ],
+  "resources": [
+    {
+      "uri": "finturb://daily/risk-snapshot",
+      "name": "Daily Risk Snapshot",
+      "description": "Today's composite risk score plus 4-way liquidity-gated extension (deterministic).",
+      "generation_mode": "deterministic"
+    },
+    {
+      "uri": "finturb://daily/market-brief",
+      "name": "Daily Market Brief",
+      "description": "Today's cross-pillar market briefing (synthesized).",
+      "generation_mode": "synthesized"
+    },
+    {
+      "uri": "finturb://methodology/overview",
+      "name": "Methodology Overview",
+      "description": "Static reference — the eight pillars, the data sources, and the output contract.",
+      "generation_mode": "deterministic"
+    }
+  ]
+}
