@@ -62,7 +62,7 @@
   "capabilities": {
     "tools": true,
     "resources": true,
-    "prompts": false,
+    "prompts": true,
     "read_only": true
   },
   "tool_count": 26,
@@ -82,5 +82,6 @@
     "email": "tk@intellicore.ai",
     "issues": "https://github.com/ai-intellicore/finturb-mcp/issues",
     "website": "https://www.finturb.com"
-  }
+  },
+  "prompt_count": 1
 }
