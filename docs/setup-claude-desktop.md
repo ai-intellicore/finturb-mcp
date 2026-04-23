@@ -5,7 +5,7 @@ JSON config.
 
 ## Path A — One-click `.mcpb` bundle (recommended)
 
-1. Download [`finturb-analytics.mcpb`](https://www.finturb.com/downloads/finturb-analytics.mcpb)
+1. Download [`finturb-analytics.mcpb`](https://www.finturb.com/static/finturb-analytics.mcpb)
    (3.2 MB).
 2. Double-click the downloaded file.
 3. Claude Desktop opens the install dialog — click **Install**.
